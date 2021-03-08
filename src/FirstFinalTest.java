@@ -8,6 +8,7 @@ Topic 1: Final modifier used with classes.
 // The following class is a class with no modifiers which means we can
 // use it to subclass and we can override methods except final methods
 class ExtendMeOptional {
+
     // This method is valid for overriding
     public void doSomething() {
         System.out.println("Overriding ExtendMeOptional.doSomething " +
