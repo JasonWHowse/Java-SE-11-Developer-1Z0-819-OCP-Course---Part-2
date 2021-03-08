@@ -74,9 +74,6 @@ class TestEnclosingClass {
         // Local variable declaration using a nested class's interface
         EnclosingClass.NestedStaticClass.NestedInterface n;
 
-        // Create an instance of the static class
-        EnclosingClass.NestedStaticClass nInstance = new EnclosingClass.NestedStaticClass();
-        System.out.println(nInstance.getInstanceName());
 
     }//public static void main(String[] args) {
 }//class TestEnclosingClass {
