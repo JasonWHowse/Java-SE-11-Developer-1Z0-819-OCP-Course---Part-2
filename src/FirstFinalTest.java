@@ -58,6 +58,12 @@ public class FirstFinalTest {
         MyFirstExtendedClass objectC = new MyFirstExtendedClass();
         objectC.doSomething();
         objectC.doSomethingFinally();
+
+        // Create an instance of our class which extends the abstract class
+        // class and execute it's methods
+        MySecondExtendedClass objectD = new MySecondExtendedClass();
+        objectD.doSomething();
+        objectD.doSomethingFinally();
     }//public static void main(String[] args) {
 }//public class FirstFinalTest {
 
@@ -73,3 +79,26 @@ class MyFirstExtendedClass extends ExtendMeOptional {
 //    }
 
 }//class MyFirstExtendedClass extends ExtendMeOptional {
+
+
+
+// The following class is an abstract class which means we MUST subclass it.
+// It is incomplete in its current form and cannot be instantiated.
+abstract class ExtendMeRequired {
+    public abstract void doSomething();
+
+    // A final method in a non-final class cannot be overridden by a
+    // subclass
+    public final void doSomethingFinally() {
+        System.out.println("Overriding ExtendMeRequired.doSomethingFinally " +
+                "is not optional");
+    }//public final void doSomethingFinally() {
+}//abstract class ExtendMeRequired {
+
+final class MySecondExtendedClass extends ExtendMeRequired {
+    // an overridden method can be modified with the final modifier and
+    // still considered a valid override.
+    public final void doSomething() {
+        System.out.println("Implementation of this method was required");
+    }//public final void doSomething() {
+}//final class MySecondExtendedClass extends ExtendMeRequired {
