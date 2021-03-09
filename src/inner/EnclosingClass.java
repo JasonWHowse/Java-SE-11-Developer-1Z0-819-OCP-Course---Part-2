@@ -13,17 +13,19 @@ public class EnclosingClass {
     // Add Constructor
     EnclosingClass(String name) {
         this.outerName = name;
-    }
+    }//EnclosingClass(String name) {
 
     // instance field on enclosing class
     public String outerName = "outer";
+
+    public InnerMemberClass innerMemberClass = new InnerMemberClass();
 
     // instance method on enclosing class
     public void doSomethingOnInstance() {
         System.out.print("doSomethingOnInstance invoked: ");
         // invoke nested class's method via class reference
         System.out.println(new InnerMemberClass().getInstanceName());
-    }
+    }//public void doSomethingOnInstance() {
 
     // Begin declaration of inner member class named InnerMemberClass
     public class InnerMemberClass {
@@ -34,20 +36,24 @@ public class EnclosingClass {
         // instance method
         public String getInstanceName() {
             return "getInstanceName() = " + this.instanceName;
-        }
+        }//public String getInstanceName() {
 
         public String getOuterName() {
-            return "InnerMemberClass.getOuterName() = " + outerName;
-        }
+            return "InnerMemberClass.getOuterName() = " + EnclosingClass.this.outerName;
+        }//public String getOuterName() {
 
-    }  // Ends declaration of the inner member class
+        // static field
+        public static final String staticName="staticName";
 
-}
+        public String outerName ="outer";
+    }//public class InnerMemberClass {
+    // Ends declaration of the inner member class
+
+}//public class EnclosingClass {
 
 // This class tests the EnclosingClass and it's inner member class
 // using a disassociated class.
 class TestEnclosingClass {
-
     public static void main(String[] args) {
         EnclosingClass e = new EnclosingClass("e's Instance");
         e.doSomethingOnInstance();
@@ -69,8 +75,8 @@ class TestEnclosingClass {
         // new instance in a single statement
         EnclosingClass.InnerMemberClass j = f.new InnerMemberClass();
         System.out.println("Invoking j.getOuterName: " + j.getOuterName());
-//
-//        e.InnerMemberClass.instanceName = "Testing";
-//        System.out.println(e.InnerMemberClass.getInstanceName());
-    }
-}
+
+        e.innerMemberClass.instanceName = "Testing";
+        System.out.println(e.innerMemberClass.getInstanceName());
+    }//public static void main(String[] args) {
+}//class TestEnclosingClass {
