@@ -62,7 +62,14 @@ public class InvariantExamples {
             if (petAge > 7) description = "SENIOR";
             else if (petAge < 1)
                 description = (petType == PetType.CAT) ? "KITTEN" : "PUPPY";
-        } else {//if (petType == PetType.CAT || petType == PetType.DOG) {
+        }//if (petType == PetType.CAT || petType == PetType.DOG) {
+        // Add else if section for PARROT
+        else if (petType == PetType.PARROT) {
+            if (petAge > 45) description = "SENIOR";
+            else if (petAge < 1) description = "CHICK";
+        }//else if (petType == PetType.PARROT) {
+        // Catch all for everything else
+        else {
             // ** Internal Invariant Assertion
             // Assumes if pet not CAT/DOG, must be GERBIL/HAMSTER
             assert (petType == PetType.GERBIL || petType == PetType.HAMSTER);
@@ -77,7 +84,6 @@ public class InvariantExamples {
                 new String[]{"ADULT", "SENIOR", "KITTEN", "PUPPY", "PUP"})).
                 indexOf(description) > -1) : "No Description exists for " +
                 petType + " age " + petAge;
-
         return description;
     }//public String getPetTypeAgeDescription(PetType petType, int petAge) {
 }//public class InvariantExamples {

@@ -6,6 +6,8 @@ Topic:  Using assertions
 */
 package assertion;
 
+import assertion.invariant.InvariantExamples;
+
 public class AssertionExample {
 
     static {
@@ -41,6 +43,9 @@ public class AssertionExample {
     }//public static void printAssertMessage(assertFlags aflag) {
 
     public static void main(String[] args) {
+
+        InvariantExamples.main(args);
+
         byte s2;
 
         // Value below exceeds Byte Max Value
