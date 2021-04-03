@@ -7,23 +7,23 @@ Topic:  Method clashing
 
 interface FirstInterface {
     // private method
-    private void methodA() {
+    default void methodA() {
         System.out.println("FirstInterface's default method A");
     }//private void methodA() {
 }//interface FirstInterface {
 
 interface SecondInterface {
     // static (and public) method
-    static void methodA() {
+    default void methodA() {
         System.out.println("SecondInterface's default method A");
     }//static void methodA() {
-}//interface SecondInterface {
+}//interface SecondInterface extends FirstInterface {
 
-public class ClashingMethods {
+public class ClashingMethods implements FirstInterface{
     public static void main(String[] args) {
         ClashingMethods first = new ClashingMethods();
         // Calling static method on an interface
-        SecondInterface.methodA();
-
+        first.methodA();
     }//public static void main(String[] args) {
+
 }//public class ClashingMethods {
