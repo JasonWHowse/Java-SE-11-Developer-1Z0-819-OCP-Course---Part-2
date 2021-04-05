@@ -5,8 +5,10 @@ Section 4: Generics and Collections
 Topic:  Comparator interface
 */
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 // Create a comparator to sort names using last names
 class LastNameComparator implements Comparator<String> {
@@ -52,5 +54,61 @@ public class ComparatorExample {
         for (String name : names) {
             System.out.println(name);
         }//for (String name : names) {
+
+        // Use collections class, ArrayList
+        List<String> namesList = new ArrayList<>(List.of(names));
+        System.out.println("------ Sorted initial List ------");
+        namesList.forEach(System.out::println);
+
+        // Use static method reverseOrder on Comparator to sort
+        namesList.sort(Comparator.reverseOrder());
+        System.out.println("---- List.sort(Comparator.reverseOrder()) ----");
+        namesList.forEach(System.out::println);
+
+        // Use static method naturalOrder on Comparator to sort
+        namesList.sort(Comparator.naturalOrder());
+        System.out.println("---- List.sort(Comparator.naturalOrder()) ----");
+        namesList.forEach(System.out::println);
+
+        // Create instance of custom Comparator
+        LastNameComparator l = new LastNameComparator();
+
+        // Passing custom Comparator to List.sort
+        namesList.sort(l);
+        System.out.println("--- ArrayList.sort(LastNameComparator) ---");
+        namesList.forEach(System.out::println);
+
+        // Passing custom Comparator to Arrays.sort.
+        Arrays.sort(names, l);
+        System.out.println("-- Arrays.sort(String[], " +
+                "LastNameComparator) --");
+        namesList.forEach(System.out::println);
+
+        // Comparator interface has a reversed() default method
+        namesList.sort(l.reversed());
+        System.out.println("--- ArrayList.sort(" +
+                "LastNameComparator.reversed()) ---");
+        namesList.forEach(System.out::println);
+
+        //  Add a null value to the ArrayList
+        namesList.add(null);
+        namesList.sort(l);
+        System.out.println("--- ArrayList.sort(" +
+                "LastNameComparator) with null ---");
+        namesList.forEach(System.out::println);
+
+        // Comparator interface has static methods which are helpful,
+        // such as allowing control over where nulls end up in sorted list
+        // you can list nulls first
+        namesList.sort(Comparator.nullsFirst(l.reversed()));
+        System.out.println("--- ArrayList.sort(Comparator." +
+                "nullsFirst(reversed))) ---");
+        namesList.forEach(System.out::println);
+
+        // you can list nulls last
+        namesList.sort(Comparator.nullsLast(l.reversed()));
+        System.out.println("--- ArrayList.sort(Comparator." +
+                "nullsLast(reversed))) ---");
+        namesList.forEach(System.out::println);
     }//public static void main(String[] args) {
 }//public class ComparatorExample {
