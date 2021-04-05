@@ -39,5 +39,52 @@ public class SetExample {
             System.out.println("HashSet h is NOT equal to TreeSet t");
         }//else {
 
+        h.add(null);
+        if (h.equals(l)) {
+            System.out.println("HashSet h is equal to LinkedHashSet t");
+        } else {
+            System.out.println("HashSet h is NOT equal to LinkedHashSet t");
+        }
+
+        System.out.println("\n----- Additional TreeSet Methods -------");
+
+        // cast t to a TreeSet variable to invoke TreeSet methods
+        TreeSet<Integer> treeSet = (TreeSet<Integer>) t;
+
+        // lower returns the greatest element < (less than) the parameter
+        // value or null if no smaller element exists
+        System.out.println("Using lower with values (1, 10, 20, 50, 51): "
+                + treeSet.lower(1) + " : "
+                + treeSet.lower(10) + " : "
+                + treeSet.lower(20) + " : "
+                + treeSet.lower(50) + " : "
+                + treeSet.lower(51));
+
+        // floor returns the greatest element <= (less than or equal to) the
+        // parameter value or null if no smaller element exists
+        System.out.println("Using floor with values (1, 10, 20, 50, 51): "
+                + treeSet.floor(1) + " : "
+                + treeSet.floor(10) + " : "
+                + treeSet.floor(20) + " : "
+                + treeSet.floor(50) + " : "
+                + treeSet.floor(51));
+
+        // ceiling returns the least element >= (greater than or equal to)
+        // the parameter value or null if no greater element exists
+        System.out.println("Using ceiling with values (1, 10, 20, 50, 51) : "
+                + treeSet.ceiling(1) + " : "
+                + treeSet.ceiling(10) + " : "
+                + treeSet.ceiling(20) + " : "
+                + treeSet.ceiling(50) + ": "
+                + treeSet.ceiling(51));
+
+        // higher returns the least element > (greater than) the parameter
+        // value or null if no greater element exists
+        System.out.println("Using higher with values (1, 10, 20, 50, 51): "
+                + treeSet.higher(1) + " : "
+                + treeSet.higher(10) + " : "
+                + treeSet.higher(20) + " : "
+                + treeSet.higher(50) + " : "
+                + treeSet.higher(51));
     }//public static void main(String[] args) {
 }//public class SetExample {
