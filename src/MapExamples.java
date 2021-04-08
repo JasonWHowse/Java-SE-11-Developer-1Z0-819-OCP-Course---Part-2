@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class MapExamples {
@@ -49,6 +50,21 @@ public class MapExamples {
                         .collect(Collectors.toSet());
 
         System.out.println("firstset = " + firstset);
+
+        // Using an IntStream
+        System.out.println("Output from an IntStream using map");
+        IntStream.iterate(5, (t) -> t + 5)
+                .limit(5)
+                .map((s) -> s * 1000)
+                .forEach((s) -> System.out.print(s + " "));
+
+        // Using a Stream<Integer>
+        System.out.println("\nOutput from an Stream using mapToInt");
+        Stream.<Integer>iterate(5, (t) -> t + 5)
+                .limit(5)
+                .mapToInt((s) -> s * 1000)
+                .map((s) -> s * 1000)
+                .forEach((s) -> System.out.print(s + " "));
 
     }//public static void main(String[] args) {
 
