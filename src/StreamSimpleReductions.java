@@ -66,6 +66,13 @@ public class StreamSimpleReductions {
 
             System.out.println("Limit = " + count + ", average  = " +
                     average + ", " + "sum = " + sum);
+
+            double sumReduced = randomIntegerList.stream()
+                    .reduce((total, currentElement) -> total + currentElement)
+                    .orElse(-1);
+
+            System.out.println("Limit = " + count + ", average  = " + average
+                    + ", " + "sum = " + sum + ", sumReduced = " + sumReduced);
         }//for (int i = 0, limit = 1; i < 5; i++) {
     }//public static void main(String[] args) {
 }//public class StreamSimpleReductions {
