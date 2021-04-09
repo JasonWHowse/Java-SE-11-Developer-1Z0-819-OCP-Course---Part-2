@@ -48,14 +48,32 @@ public class OptionalTests {
 //        List.of(joe, jane)
 //                .stream()
 //                .forEach(OptionalTests::printStatus);
-
+//
+//        List.of(joe, jane)
+//                .stream()
+//                .forEach(s -> System.out.println(s.getName() +
+//                        (s.getGpa()
+//                                .or(() -> {
+//                                    System.out.println(
+//                                            "In Supplier Code for "+ s.getName());
+//                                    return Optional.of(2.0f);
+//                                })
+//                                .get() >= 2.0f
+//                                ? " in good standing" :
+//                                " on academic probation")));
         List.of(joe, jane)
                 .stream()
-                .filter(s -> s.getGpa().isPresent())
                 .forEach(s -> System.out.println(s.getName() +
-                        (s.getGpa().get() >= 2.0f
+                        (s.getGpa()
+//                                .orElseThrow()
+                                .orElseGet(OptionalTests::getGpaEstimate)
+                                >= 2.0f
                                 ? " in good standing" :
                                 " on academic probation")));
+
+
+        System.out.println("Joe's gpa = " + joe.getGpa());
+        System.out.println("Jane's gpa = " + jane.getGpa());
 
     }//public static void main(String[] args) {
 
@@ -73,4 +91,10 @@ public class OptionalTests {
         } //if ((gpa = student.getGpa()).isPresent()) {
         else System.out.println(" has an unknown gpa");
     }//private static void printStatus(CollegeStudent student) {
+
+    private static float getGpaEstimate() {
+        System.out.println("--- in getGpaEstimate method");
+        return 2.0f;
+    }//private static float getGpaEstimate() {
+
 }//public class OptionalTests {
