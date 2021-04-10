@@ -8,6 +8,7 @@ Topic: additional Collectors.toMap and Collectors.groupingBy
 import element.Pet;
 
 import java.util.List;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -26,7 +27,9 @@ public class StreamExtras {
         petPopulation.stream()
                 .collect(
                         // groupingBy with a single argument
-                        Collectors.groupingBy(Pet::getType))
+                        Collectors.groupingBy(Pet::getType,
+                                TreeMap::new,
+                                Collectors.toList()))
                 .entrySet()
                 .stream()
                 .forEach(System.out::println);
@@ -41,7 +44,10 @@ public class StreamExtras {
                         // toMap requires at least 2 arguments
                         Collectors.toMap(
                                 p -> p.getType() + "_" + p.getName(),
-                                p -> p))
+                                p -> p,
+                                // merge function ignored if not parallel
+                                (existing, replacement) -> existing,
+                                TreeMap::new))
                 .entrySet()
                 .stream()
                 .forEach(System.out::println);
