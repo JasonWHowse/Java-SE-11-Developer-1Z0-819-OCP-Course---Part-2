@@ -6,6 +6,7 @@ Topic: Stream Grouping
 */
 package element;
 
+import java.util.Objects;
 import java.util.Random;
 
 // This class will support creating a self-constructed Pet object
@@ -75,14 +76,26 @@ public class Pet {
         return age;
     }//public int getAge() {
 
+
+
     public String toString() {
         return "Pet{" +
-                "name='" + name + '\'' +
-                ", type='" + type + '\'' +
+                "type='" + type + '\'' +
+                ", name='" + name + '\'' +
                 ", owner='" + owner + '\'' +
-                ", vet='" + vet + '\'' +
-                ", state='" + state + '\'' +
                 ", age=" + age +
                 '}';
     }//public String toString() {
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pet)) return false;
+        Pet pet = (Pet) o;
+        return getName().equals(pet.getName()) &&
+                getType().equals(pet.getType());
+    }//public boolean equals(Object o) {
+
+    public int hashCode() {
+        return Objects.hash(getType());
+    }//public int hashCode() {
 }//public class Pet {
