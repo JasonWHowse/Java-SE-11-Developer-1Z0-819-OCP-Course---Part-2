@@ -4,7 +4,9 @@ import gamble.slots.spi.PayOffService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ServiceLoader;
+import java.util.stream.Collectors;
 
 // The application that will use the provider to provide
 // 'winnings' for a player, whatever the winnings might be
@@ -29,7 +31,7 @@ public class CherrySlot {
     // Method that plays the game and provides winnings
     private void playGame() {
 
-        PayOffService p = getService();
+        PayOffService p = getPreferredService();
         if (p == null) System.out.println("Provider not found");
         else {
             System.out.println("Congratulations:  You're a winner!");
@@ -37,4 +39,26 @@ public class CherrySlot {
         }//else {
 
     }//private void playGame() {
+
+
+    // Method that searches for providers and first one which is not
+    // the default provider packaged with the application
+    private PayOffService getPreferredService() {
+        List<PayOffService> providers =
+                ServiceLoader.load(PayOffService.class)
+                        .stream()
+                        .map(ServiceLoader.Provider::get)
+                        .collect(Collectors.toList());
+
+        // Give precedence to provider that is NOT the default provider
+        Optional<PayOffService> service = providers.stream()
+                .filter((s) ->
+                        !s.getClass().getName()
+                                .contains("gamble.slots.impl"))
+                .findFirst();
+
+        if (service.isEmpty()) {
+            return providers.stream().findFirst().orElse(null);
+        } else return service.get();//if (service.isEmpty()) {
+    }//private PayOffService getPreferredService() {
 }//public class CherrySlot {
