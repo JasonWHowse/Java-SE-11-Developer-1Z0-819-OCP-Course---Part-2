@@ -12,6 +12,6 @@ public class EntityOne {
     // Constructor calls UtilityClass
     public EntityOne(String s) {
         UtilityClass.doSomethingStatic("EntityOne instantiated with " + s);
-    }//public EntityOne(String s) {
+    }
 
-}//public class EntityOne {
+}

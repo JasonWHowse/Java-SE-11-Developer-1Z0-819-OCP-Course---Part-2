@@ -17,7 +17,7 @@ public class Controller {
     // Constructor
     Controller(String s) {
         UtilityClass.doSomethingStatic("Controller instantiated with " + s);
-    }//Controller(String s) {
+    }
 
     // main method and executes queryModuleData on classes in different packages
     // and modules.
@@ -38,7 +38,7 @@ public class Controller {
         // query the module current class is in
         queryModuleData(ServiceOne.class);
 
-    }//public static void main(String[] args) {
+    }
 
     private static void queryModuleData(Class cls) {
         System.out.println("\n------------ class: " + cls);
@@ -49,5 +49,5 @@ public class Controller {
         System.out.println("Module Descriptor: " + module.getDescriptor());
         if (module.getDescriptor() != null)
             System.out.println("isAutomatic: " + module.getDescriptor().isAutomatic());
-    }//private static void queryModuleData(Class cls) {
-}//public class Controller {
+    }
+}

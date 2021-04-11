@@ -10,7 +10,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../sample.service.jar!/" />
+          <root url="jar://$MODULE_DIR$/../sample.core.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -28,7 +28,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../sample.core.jar!/" />
+          <root url="jar://$MODULE_DIR$/../sample.service.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

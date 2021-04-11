@@ -5,8 +5,8 @@ Section 9: Migration to Modular System.
 */
 package sample.service;
 
-import sample.entity.EntityOne;
 import sample.core.UtilityClass;
+import sample.entity.EntityOne;
 
 public class ServiceOne {
     // has a private attribute of EntityOne
@@ -15,5 +15,5 @@ public class ServiceOne {
     // Constructor which uses UtilityClass
     public ServiceOne(String s) {
         UtilityClass.doSomethingStatic("ServiceOne instantiated with " + s);
-    }//public ServiceOne(String s) {
-}//public class ServiceOne {
+    }
+}
