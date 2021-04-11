@@ -7,8 +7,8 @@ Topic:  Service extras
 
 package test.impl;
 
-// This class implements the TestService interface
-public class TestProviderTwo implements test.spi.TestService {
+// This class implements the EnhancedTestService interface
+public class TestProviderTwo implements test.impl.EnhancedTestService {
 
     // Public explicit no args constructor
     public TestProviderTwo() {
@@ -19,4 +19,4 @@ public class TestProviderTwo implements test.spi.TestService {
     public void provideTheService() {
         System.out.println("TestProviderTwo");
     }//public void provideTheService() {
-}//public class TestProviderTwo implements test.spi.TestService {
+}//public class TestProviderTwo implements test.impl.EnhancedTestService {

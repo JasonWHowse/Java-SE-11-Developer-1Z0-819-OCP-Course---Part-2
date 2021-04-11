@@ -10,6 +10,9 @@
       <module fileurl="file://$PROJECT_DIR$/test.consumer/test.consumer.iml" filepath="$PROJECT_DIR$/test.consumer/test.consumer.iml" />
       <module fileurl="file://$PROJECT_DIR$/test.impl/test.impl.iml" filepath="$PROJECT_DIR$/test.impl/test.impl.iml" />
       <module fileurl="file://$PROJECT_DIR$/test.spi/test.spi.iml" filepath="$PROJECT_DIR$/test.spi/test.spi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/variance.consumer/variance.consumer.iml" filepath="$PROJECT_DIR$/variance.consumer/variance.consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/variance.impl/variance.impl.iml" filepath="$PROJECT_DIR$/variance.impl/variance.impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/variance.spi/variance.spi.iml" filepath="$PROJECT_DIR$/variance.spi/variance.spi.iml" />
     </modules>
   </component>
 </project>
