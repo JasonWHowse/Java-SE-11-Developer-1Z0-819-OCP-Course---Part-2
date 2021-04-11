@@ -32,6 +32,12 @@ public class Controller {
         // query the java.util.logging.Logger class
         queryModuleData(java.util.logging.Logger.class);
 
+        // query the module current class is in
+        queryModuleData(EntityOne.class);
+
+        // query the module current class is in
+        queryModuleData(ServiceOne.class);
+
     }//public static void main(String[] args) {
 
     private static void queryModuleData(Class cls) {

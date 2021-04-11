@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ModularConversion.iml" filepath="$PROJECT_DIR$/ModularConversion.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sample.core/sample.core.iml" filepath="$PROJECT_DIR$/sample.core/sample.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sample.api/sample.api.iml" filepath="$PROJECT_DIR$/sample.api/sample.api.iml" />
     </modules>
   </component>
 </project>

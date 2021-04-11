@@ -5,8 +5,8 @@ Section 9: Migration to Modular System.
 */
 package sample.service;
 
-import sample.core.UtilityClass;
 import sample.entity.EntityOne;
+import sample.core.UtilityClass;
 
 public class ServiceOne {
     // has a private attribute of EntityOne
