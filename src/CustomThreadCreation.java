@@ -5,6 +5,7 @@ Section 11: Concurrency
 Topic:  Subclassing Thread
 */
 
+import java.util.Random;
 import java.util.stream.Stream;
 
 // Create a custom thread that extends Thread
@@ -91,7 +92,24 @@ public class CustomThreadCreation {
             Thread.sleep(150);
         }//while (t.isAlive()) {
 
-        System.out.println("\nAll threads interrupted, Terminating");
+        System.out.println("\nDemonstrating using join");
+
+        // Create local class of type Thread,  implement the run() method
+        // creating a stream of 10 random numbers between 1 and 100
+        Thread n2 = new Thread() {
+            public void run() {
+                new Random().ints(10, 1, 100).forEach(System.out::println);
+            }//public void run() {
+        };
+
+        // Call start() which executes local class's run()
+        n2.start();
+
+        // The join method waits for the thread to complete
+        n2.join();
+        System.out.println("The status of thread after join: ");
+        System.out.println("n2.isAlive=" + n2.isAlive());
+        System.out.println("n2.isInterrupted=" + n2.isInterrupted());
 
     }//public static void main(String[] args) throws
 }//public class CustomThreadCreation {
