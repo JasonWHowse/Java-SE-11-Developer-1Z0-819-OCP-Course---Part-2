@@ -22,13 +22,24 @@ public class ExecutorExample {
         // Fire and Forget method of execution:  ThreadOne
         executorService.execute(ExecutorExample::doSomethingThreadOne);
 
-        // Fire and Forget method of execution: ThreadTwo
-        executorService.submit(ExecutorExample::doSomethingThreadTwo);
+// Fire and keep a reference to task
+        var submittedThread = executorService.submit(
+                ExecutorExample::doSomethingThreadTwo);
 
 
+        // Output data from the main thread, demonstrating that
+        // threads are running asynchronously.
         for (int i = 1; i < 11; i++) {
             System.out.println("Main thread: iteration " + i);
             Thread.sleep(250);
+            if (i == 7) {
+                // Use task reference to cancel the task
+                if (!submittedThread.isDone()) {
+                    submittedThread.cancel(true);
+                    System.out.println("Was able to cancel using " +
+                            submittedThread.getClass().getName());
+                }
+            }
         }//for (int i = 1; i < 11; i++) {
 
         // Shutdown the service
