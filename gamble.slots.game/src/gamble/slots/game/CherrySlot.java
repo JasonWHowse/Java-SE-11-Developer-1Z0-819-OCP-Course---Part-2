@@ -2,10 +2,7 @@ package gamble.slots.game;
 
 import gamble.slots.spi.PayOffService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.ServiceLoader;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // The application that will use the provider to provide
@@ -31,7 +28,7 @@ public class CherrySlot {
     // Method that plays the game and provides winnings
     private void playGame() {
 
-        PayOffService p = getPreferredService();
+        PayOffService p = getServiceInManyWays(0);
         if (p == null) System.out.println("Provider not found");
         else {
             System.out.println("Congratulations:  You're a winner!");
@@ -61,4 +58,79 @@ public class CherrySlot {
             return providers.stream().findFirst().orElse(null);
         } else return service.get();//if (service.isEmpty()) {
     }//private PayOffService getPreferredService() {
+
+    // Method will retrieve a service in multiple ways
+    private PayOffService getServiceInManyWays(int whichWay) {
+        System.out.println("whichWay = " + whichWay);
+
+        // Call the static load() method on ServiceLoader which returns instance of ServiceLoader,
+        // an Iterable whose iterator is made up of PayOffService objects
+        ServiceLoader<PayOffService> loader = ServiceLoader.load(PayOffService.class);
+
+        // Print out type of the result of load()
+        System.out.println("Result of load method = " + loader.getClass());
+
+        // Local variable will be returned from this method
+        PayOffService payOffService = null;
+
+
+//        // You cannot directly instantiate a PayOffService, it's an interface
+//        payOffService = new PayOffService();
+//
+//        // You cannot instantiate a ServiceLoader with a no args constructor
+//        payOffService = new ServiceLoader().load(PayOffService.class);
+//
+//        // ServiceLoader.load does NOT return a PayOffService instance
+//        payOffService = ServiceLoader.load(PayOffService.class);
+//
+//        // ServiceLoader.load returns an instance of ServiceLoader,
+//        // not a Provider or Optional that supports .get()
+//        payOffService = ServiceLoader.load(PayOffService.class).get();
+
+        switch (whichWay) {
+            case (0):
+                payOffService = loader.stream()
+                        // map from a Provider<PayOffService> to a PayOffService
+                        .map(ServiceLoader.Provider::get)
+                        // now have a PayOffService so do not need .get() method
+                        .filter(s -> s.getClass().getName().startsWith("gamble"))
+                        // Now returned an Optional<PayOffService> and not Optional<Provider>
+                        .findFirst()
+                        .get();
+                break;
+            case (3):
+                payOffService = loader.stream()
+                        // In this instance I do not map to PayOffService, but instead
+                        // use ServiceLoader.Provider.get() method in the filter
+                        .filter(s -> s.get().getClass().getName().startsWith("gamble"))
+                        // findFirst is the terminal operation and returns Optional<Provider>
+                        .findFirst()
+                        //get method on Optional returns a Provider
+                        .get()
+                        // need to call get again, this tim on Provider to get our PayOffService
+                        .get();
+                break;
+
+            case (2):
+                // Using iterator(), iterating through elements and
+                // retrieving one based on class name.
+                Iterator<PayOffService> iterator = loader.iterator();
+                while (iterator.hasNext()) {
+                    var iteratorItem = iterator.next();
+                    System.out.println(iteratorItem.getClass());
+                    if (iteratorItem.getClass().getName().startsWith("nj")) {
+                        payOffService = iteratorItem;
+                    }
+                }
+                break;
+            case (1):
+                payOffService = ServiceLoader.load(PayOffService.class)
+                        // ServiceLoader.findFirst() returns an Optional
+                        .findFirst()
+                        // Need to use .get() on Optional to get a PayOffService
+                        .get();
+                break;
+        }//switch (whichWay) {
+        return payOffService;
+    }//private PayOffService getServiceInManyWays(int whichWay) {
 }//public class CherrySlot {
