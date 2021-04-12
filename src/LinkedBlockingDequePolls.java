@@ -31,8 +31,8 @@ public class LinkedBlockingDequePolls {
         usePopMethod(dequeBlocked);
         dequeBlocked.addAll(staticList);
 
-        //Test Take Methods
-        useTakeMethods(dequeBlocked);
+        //Test Poll Methods
+        usePollMethodsWithTimeout(dequeBlocked);
     }//public static void main(String[] args) throws InterruptedException {
 
     // This method uses poll, pollFirst, pollLast methods
@@ -178,4 +178,35 @@ public class LinkedBlockingDequePolls {
         System.out.println("After take(), " + dequedPerson +
                 " was removed: " + dequeBlocked);
     }//private static void useTakeMethods(BlockingDeque<String> dequeBlocked)
+    // This method uses poll, pollFirst, pollLast methods with
+// timeout time span defined
+
+    private static void usePollMethodsWithTimeout(
+            BlockingDeque<String> dequeBlocked)
+            throws InterruptedException {
+        System.out.println("-------- Timed out Poll Methods ---------");
+        System.out.println("Original state of Deque: " + dequeBlocked);
+
+        // Removing data with poll, removes data from the head of the queue
+        String dequedPerson = dequeBlocked.poll(1, TimeUnit.SECONDS);
+        System.out.println("After poll(), " + dequedPerson +
+                " was removed: " + dequeBlocked);
+
+        // pollLast removes data from the tail
+        dequedPerson = dequeBlocked.pollLast(1, TimeUnit.SECONDS);
+        System.out.println("After pollLast(), " + dequedPerson +
+                " was removed: " + dequeBlocked);
+
+        // pollFirst removes data from the head
+        dequedPerson = dequeBlocked.pollFirst(1, TimeUnit.SECONDS);
+        System.out.println("After pollFirst(), " + dequedPerson +
+                " was removed: " + dequeBlocked);
+
+        dequeBlocked.clear();
+        System.out.println("After clearing the deque");
+        // Any remove method will return a null if timeout occurs
+        dequedPerson = dequeBlocked.poll(1, TimeUnit.SECONDS);
+        System.out.println("After poll(), " + dequedPerson +
+                " was removed: " + dequeBlocked);
+    }//private static void usePollMethodsWithTimeout(
 }//public class LinkedBlockingDequePolls {
