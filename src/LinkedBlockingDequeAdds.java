@@ -5,8 +5,7 @@ Section 11: Concurrency
 Topic:  LinkedBlockingDequeAdds
 */
 
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.*;
 
 public class LinkedBlockingDequeAdds {
     public static void main(String[] args) throws InterruptedException {
@@ -25,10 +24,26 @@ public class LinkedBlockingDequeAdds {
         // Test Push Method, returns void, available for deque
         usePushMethod(dequeBlocked);
         dequeBlocked.clear();
+        // Schedule a thread to pop an element from the queue
+        ScheduledExecutorService scheduledService =
+                Executors.newScheduledThreadPool(1);
 
-        // Test Put Methods
-        usePutMethods(dequeBlocked);
-        dequeBlocked.clear();
+        var thread = scheduledService.scheduleAtFixedRate(() -> {
+            System.out.println("popping queue");
+            System.out.println("Got " + dequeBlocked.pop());
+            System.out.println("dequeBlocked " + dequeBlocked);
+
+        }, 2, 2, TimeUnit.SECONDS);
+
+
+        // Test offer methods with timeout
+        useOfferMethodsTimed(dequeBlocked);
+
+        Thread.sleep(5000);
+        scheduledService.shutdown();
+
+        // Wait no longer than 20 seconds for completion confirmation
+        scheduledService.awaitTermination(20, TimeUnit.SECONDS);
     }//public static void main(String[] args) throws InterruptedException {
 
     // This method uses offer, offerFirst, offerLast methods and tests
@@ -121,6 +136,38 @@ public class LinkedBlockingDequeAdds {
         // A put method will block thread if not successful
         // and wait until queue has more capacity
         dequeBlocked.putLast("Harold");
+    }//private static void usePutMethods(BlockingDeque<String> dequeBlocked) throws InterruptedException{
+
+    // This method uses the timeout versions of offer methods
+    private static void useOfferMethodsTimed(
+            BlockingDeque<String> dequeBlocked)
+            throws InterruptedException {
+        // Adding data with offer, adds data to the tail of the queue
+        boolean wasSuccessful = dequeBlocked.offer("Jane", 1, TimeUnit.SECONDS);
+        dequeBlocked.offer("Anne", 1, TimeUnit.SECONDS);
+
+        // offerLast is equivalent to offer, adds data to the tail
+        wasSuccessful = dequeBlocked.offerLast("John", 1, TimeUnit.SECONDS);
+
+        // offerFirst adds data to the head
+        wasSuccessful = dequeBlocked.offerFirst("Mary", 1, TimeUnit.SECONDS);
+        System.out.println(dequeBlocked);
+
+        // Any offer method will return a false if unable to add element
+        wasSuccessful =
+                dequeBlocked.offer("Harold", 1, TimeUnit.SECONDS);
+        if (wasSuccessful)
+            System.out.println("Harold was added successfully");
+        else
+            System.out.println("Harold decided not to wait longer" +
+                    " than 1 second");
+
+        wasSuccessful = dequeBlocked.offerFirst("Ida", 15, TimeUnit.SECONDS);
+        if (wasSuccessful)
+            System.out.println("Ida was added successfully");
+        else
+            System.out.println("Ida decided not to wait longer" +
+                    " than 15 seconds");
     }
 
 }//public class LinkedBlockingDequeAdds {
