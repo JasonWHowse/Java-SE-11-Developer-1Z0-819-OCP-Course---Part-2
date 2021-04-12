@@ -25,6 +25,10 @@ public class LinkedBlockingDequeAdds {
         // Test Push Method, returns void, available for deque
         usePushMethod(dequeBlocked);
         dequeBlocked.clear();
+
+        // Test Put Methods
+        usePutMethods(dequeBlocked);
+        dequeBlocked.clear();
     }//public static void main(String[] args) throws InterruptedException {
 
     // This method uses offer, offerFirst, offerLast methods and tests
@@ -97,6 +101,26 @@ public class LinkedBlockingDequeAdds {
         } catch (IllegalStateException ise) {//try {
             System.out.println("Harold could not be added: " + ise);
         }//catch (IllegalStateException ise) {
+    }
+
+    // This method uses put, putFirst, putLast methods and tests
+    // what happens when queue capacity is reached
+    private static void usePutMethods(BlockingDeque<String> dequeBlocked) throws InterruptedException{
+        // Adding data with put, adds data to the tail of the queue
+        // All the add methods returns a void
+        dequeBlocked.put("Jane");
+        dequeBlocked.put("Anne");
+
+        // putLast is equivalent to put, adds data to the tail
+        dequeBlocked.putLast("John");
+
+        // putFirst adds data to the head
+        dequeBlocked.putFirst("Mary");
+        System.out.println(dequeBlocked);
+
+        // A put method will block thread if not successful
+        // and wait until queue has more capacity
+        dequeBlocked.putLast("Harold");
     }
 
 }//public class LinkedBlockingDequeAdds {
