@@ -22,16 +22,17 @@ class Animal  {
 
 // Class must implement Serializable if it does not extend
 // a class that implements Serializable...
-class Pet extends Animal implements Serializable  {
+class Pet extends Animal implements Externalizable {
     private String name;
     private String type;
     private transient String breed = "Unknown";
+    static int count;
 
     // No arguments constructor
-    Pet() {
+    public Pet() {
         super(0);
         System.out.println("Inside no args Pet constructor");
-    }//Pet() {
+    }//public Pet() {
 
     // Constructor takes name and type of Pet
     Pet(String name, String type) {
@@ -49,10 +50,29 @@ class Pet extends Animal implements Serializable  {
                 ", breed='" + breed + '\'' +
                 ", age='" + age + '\'' +
                 ", weight ='" + weight + '\'' +
+                ", count ='" + count + '\'' +
                 '}';
     }//public String toString() {
 
-}//class Pet extends Animal implements Serializable {
+    // overrides default method on Serializable
+
+    public void writeExternal(ObjectOutput out) throws IOException {
+        System.out.println("writeExternal");
+        out.writeObject(name);
+        out.writeObject(breed);
+        out.write(age);
+
+    }//public void writeExternal(ObjectOutput out) throws IOException {
+
+    public void readExternal(ObjectInput in) throws IOException,
+            ClassNotFoundException {
+        System.out.println("readExternal");
+        name = (String) in.readObject();
+        breed = (String) in.readObject();
+        age = in.read();
+
+    }//public void readExternal(ObjectInput in) throws IOException,
+}//class Pet extends Animal implements Externalizable {
 
 public class SerializationExample {
     public static void main(String[] args) throws IOException,
@@ -63,6 +83,7 @@ public class SerializationExample {
         Pet originalPet = new Pet("Brandy", "Dog");
         originalPet.age = 5;
         originalPet.weight = 30;
+        Pet.count = 55;
         System.out.println("--------- Original State -----------");
         System.out.println(originalPet);
 
@@ -83,7 +104,7 @@ public class SerializationExample {
                 // read the Pet from a file
                 deserializedPet = (Pet) inStream.readObject();
 
-                // Need to check for EOFException    
+                // Need to check for EOFException
             } catch (EOFException e) {//try {
                 // Ignore, end of file
             }//catch (EOFException e) {
