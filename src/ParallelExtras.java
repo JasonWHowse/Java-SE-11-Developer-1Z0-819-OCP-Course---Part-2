@@ -16,22 +16,22 @@ public class ParallelExtras {
 
         // Using reduce with StringBuilder
         StringBuilder firstResult = set
-                .stream()
+                .parallelStream()
                 .map(s -> new StringBuilder(s))
                 // Requires Identity(StringBuilder), BiFunction, BinaryOperator
-                .reduce(new StringBuilder(),
-                        (a, b) -> a.append(b),
+                .reduce(new StringBuilder("a"),
+                        (a, b) -> b.append(a),
                         (a, b) -> a.append(b));
 
         System.out.println("firstResult = " + firstResult);
 
         // Using collect with StringBuilder
         StringBuilder secondResult = set
-                .stream()
+                .parallelStream()
                 .map(s -> new StringBuilder(s))
                 // collect requires Supplier, BiConsumer, BiConsumer
-                .collect(StringBuilder::new,
-                        (a, b) -> a.append(b),
+                .collect(() -> { return new StringBuilder("a"); },
+                        (a, b) -> b.append(a),
                         (a, b) -> a.append(b));
 
         System.out.println("secondResult = " + secondResult);
