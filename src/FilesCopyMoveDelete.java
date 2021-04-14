@@ -8,6 +8,7 @@ Topic: Copy, Move, Delete, and Create directories and paths.
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 public class FilesCopyMoveDelete {
     public static void main(String[] args) {
@@ -19,6 +20,9 @@ public class FilesCopyMoveDelete {
 
         // Create the file specified in the Path instance
         testCreationFromPathInstance(p);
+
+        // Copy and Move tests:
+        copyAndMove();
     }//public static void main(String[] args) {
 
     private static void testCreationFromPathInstance(Path p) {
@@ -115,4 +119,64 @@ public class FilesCopyMoveDelete {
             System.out.println("C.  Unable to delete File: " + io);
         }//catch (IOException io) {
     }//private static void doDeletions(Path p) {
+
+    private static void copyAndMove() {
+
+        System.out.println("-------- Testing copies --------");
+        Path source = Path.of("testA/testB/testC");
+        Path target = Path.of("testA/testB/testD");
+
+        try {
+            // Copy the testC directory and its contents
+            // to testD (testD will get created)
+            Path result = Files.copy(source, target,
+                    StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("A.  Directory copied successfully: " +
+                    source + " -> " + result);
+        } catch (IOException io) {//try {
+            System.out.println("A.  Unable to copy Directory to source: "
+                    + io);
+        }//catch (IOException io) {
+
+        source = Path.of("testA/testB/testC/testFile.txt");
+        target = Path.of("testA/testB/testD/testFile.txt");
+        try {
+            // Copy the file testFile.txt in directory testC
+            // to directory testD, keeping the same file name
+            Path result = Files.copy(source, target,
+                    StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("B.  File copied successfully: " +
+                    source + " -> " + result);
+        } catch (IOException io) {//try {
+            System.out.println("B.  Unable to copy File to source: "
+                    + io);
+        }//catch (IOException io) {
+        source = Path.of("testA/testB/testC");
+        target = Path.of("testA/testB/testE");
+        try {
+            // Copy the testC directory and its contents
+            // to testE (testE will get created)
+            Path result = Files.move(source, target,
+                    StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("C.  Directory moved successfully: " +
+                    source + " -> " + result);
+        } catch (IOException io) {//try {
+            System.out.println("C.  Unable to move Directory to source: "
+                    + io);
+        }//catch (IOException io) {
+
+        source = Path.of("testA/testB/testD/testFile.txt");
+        target = Path.of("testA/testB/testE/aNewFile.txt");
+        try {
+            // Copy the file testFile.txt in directory testD
+            // to directory testE, but assign it a different name
+            Path result = Files.move(source, target,
+                    StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("D.  File moved successfully: " +
+                    source + " -> " + result);
+        } catch (IOException io) {//try {
+            System.out.println("D.  Unable to move File to source: "
+                    + io);
+        }//catch (IOException io) {
+    }//private static void copyAndMove() {
 }//public class FilesCopyMoveDelete {
