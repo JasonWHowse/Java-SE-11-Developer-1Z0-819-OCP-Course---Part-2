@@ -6,6 +6,8 @@ Topic:  CRUD operations
 */
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class CRUDExamples {
@@ -31,6 +33,9 @@ public class CRUDExamples {
 
             // Example of DML - delete data
             deleteData(connection, 104);
+
+            // Example of DML - get (read) data
+            getPersonList(connection).forEach(System.out::println);
 
             // Example of DML - get (read) data
             getData(connection);
@@ -140,4 +145,57 @@ public class CRUDExamples {
             }//if (stmt.executeUpdate() == 1) {
         }//try (PreparedStatement stmt =
     }//public static void deleteData(Connection connection, int person_id)
+
+    // get data from a table and populate a list of Person
+    public static List<Person> getPersonList(Connection connection) throws SQLException {
+
+        // Get all information in a record
+        String retrieveSQL =
+                "select * from PERSON ";
+
+        List<Person> data = new ArrayList<>();
+        try (Statement stmt = connection.createStatement(
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_UPDATABLE)) {
+
+            // ResultSet will be closed automatically when statement is
+            // closed
+            ResultSet rs = stmt.executeQuery(retrieveSQL);
+
+            // Result set is an iterable set of data, here representing
+            // records returned from the select statement
+
+            // Iterate backwards through the result set...
+            rs.afterLast();
+            while (rs.previous()) {
+//                if (rs.getInt("PERSON_ID") == 101) rs.updateInt("AGE", 99);
+                data.add(new Person(rs.getInt("PERSON_ID"),
+                        rs.getString("NAME"),
+                        rs.getInt("AGE")));
+            }//while (rs.previous()) {
+        }//try (Statement stmt = connection.createStatement(
+        return data;
+    }//public static List<Person> getPersonList(Connection connection) throws SQLException {
 }//public class CRUDExamples {
+
+// Person class represents data in a PERSON table
+class Person {
+    private int id;
+    private String name;
+    private int age;
+
+    // constructor
+    public Person(int id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }//public Person(int id, String name, int age) {
+
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }//public String toString() {
+}//class Person {
