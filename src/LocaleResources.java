@@ -22,6 +22,8 @@ public class LocaleResources {
         testProperties(Locale.GERMANY);
 
         testProperties(new Locale("en", "US", "slang"));
+
+        testProperties(Locale.CANADA);
     }//public static void main(String[] args) {
 
     public static void testProperties(Locale locale) {
