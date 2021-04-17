@@ -18,13 +18,20 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 // Apply annotations to the class
-@MyClassAnnotation()
-@MySourceAnnotation()
-@MyRuntimeAnnotation()
+@MyRuntimeAnnotation(
+        author = "Tim",
+        version = 1.0,
+        description = "This class is used for testing annotations"
+)
 public class TestingAnnotatedClasses {
+
+    @MyClassAnnotation()
+    String MyField = "AnnotatedField";
+
 
     // reflection methods used to get information about class, methods,
     // fields
+    @MySourceAnnotation()
     public void printRuntimeAnnotations() {
         Class c = this.getClass();
 

@@ -7,9 +7,14 @@ Topic:  Annotation retained Virtual Machine
 
 package annotations;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.*;
+
 
 @Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+@Documented
 public @interface MyRuntimeAnnotation {
+    String author();
+    double version();
+    String description();
 }//public @interface MyRuntimeAnnotation {
