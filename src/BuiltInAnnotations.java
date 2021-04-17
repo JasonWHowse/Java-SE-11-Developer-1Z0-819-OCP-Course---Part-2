@@ -8,7 +8,7 @@ Topic:  Built In Annotations
 @FunctionalInterface
 interface Functionable {
     void performSomeFunction();
-}
+}//interface Functionable {
 
 public class BuiltInAnnotations implements Functionable {
     public static void main(String[] args) {
