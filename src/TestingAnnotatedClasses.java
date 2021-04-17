@@ -9,9 +9,7 @@ javac -d . -cp . -processor AnnotationProcessor ..\..\..\src\TestingAnnotatedCla
 
 */
 
-import annotations.MyClassAnnotation;
-import annotations.MyRuntimeAnnotation;
-import annotations.MySourceAnnotation;
+import annotations.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -23,7 +21,15 @@ import java.lang.reflect.Method;
         version = 1.0,
         description = "This class is used for testing annotations"
 )
-public class TestingAnnotatedClasses {
+
+// --Marker Annotation,  Repeatable
+@MyRepeatableAnnotation
+
+// --Single Element Annotation,  Repeatable
+// Do not have to specify element name if it is 'value'
+@MyRepeatableAnnotation(10)
+public class TestingAnnotatedClasses extends ParentClass
+        implements SomeInterface {
 
     @MyClassAnnotation()
     String MyField = "AnnotatedField";
@@ -49,9 +55,9 @@ public class TestingAnnotatedClasses {
     public void showAnnotations(Object e) {
         Annotation[] annotations = null;
         if (e instanceof Class) annotations =
-                ((Class) e).getDeclaredAnnotations();
+                ((Class) e).getAnnotations();
         else if (e instanceof Method) annotations =
-                ((Method) e).getDeclaredAnnotations();
+                ((Method) e).getAnnotations();
         else if (e instanceof Field) annotations =
                 ((Field) e).getDeclaredAnnotations();
         for (Annotation annotation : annotations) {
@@ -64,4 +70,29 @@ public class TestingAnnotatedClasses {
         new TestingAnnotatedClasses().printRuntimeAnnotations();
 
     }//public static void main(String[] args) {
-}//public class TestingAnnotatedClasses {
+
+    // Implementing abstract method of ParentClass
+    public void abstractMethod() {
+        System.out.println("Implemented abstractMethod");
+    }//public void abstractMethod() {
+
+    // Implementing interface's Method
+    public void interfaceMethod() {
+        System.out.println("Implemented interfaceMethod");
+    }//public void interfaceMethod() {
+}//public class TestingAnnotatedClasses extends ParentClass
+
+
+@MyFirstInheritedAnnotation
+abstract class ParentClass {
+
+    @MyFirstInheritedAnnotation
+    public abstract void abstractMethod();
+}//abstract class ParentClass {
+
+@MySecondInheritedAnnotation
+interface SomeInterface {
+
+    @MySecondInheritedAnnotation
+    void interfaceMethod();
+}//interface SomeInterface {
