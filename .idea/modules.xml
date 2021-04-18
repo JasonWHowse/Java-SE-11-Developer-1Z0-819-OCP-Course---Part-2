@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AnnotationsProject.iml" filepath="$PROJECT_DIR$/AnnotationsProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TestDeprecatedModule/TestDeprecatedModule.iml" filepath="$PROJECT_DIR$/TestDeprecatedModule/TestDeprecatedModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TestModuleAnnotations/TestModuleAnnotations.iml" filepath="$PROJECT_DIR$/TestModuleAnnotations/TestModuleAnnotations.iml" />
     </modules>
   </component>
 </project>
